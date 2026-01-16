@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Map my Mind</title>
+    <link rel="icon" type="image/x-icon" href="Images/icon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light">
+    <link rel="stylesheet" href="UiStyle.css">
+    <link rel="stylesheet" href="NodeStyle.css">
+    <script src="JavaScripts/ImportantFunctions.js"></script>
+    <script src="JavaScripts/insertObjects.js"></script>
+    <script src="JavaScripts/RandomSmallFixes.js"></script>
+    <script src="JavaScripts/Properties.js"></script>
+    <script src="JavaScripts/PropApplier.js"></script>
+    <script>console.log("Dude. What are you doing here? No, really, why? There is zero reason for your mindmap needing a bit of code! What do you need in the inspect element in the first place, let alone the console! I dont understand, why, why, WHY?!")</script>
+</head>
+
+<body>
+    <div id="mmLayer">
+        <p id="noUiInfo" style="z-index: 100;position: relative;color:var(--opposite);height: 3vh;" class="tScale">Alt+H to add back ui</p>
+        <div id="selectionArea"></div>
+        <div id="background"></div>
+        <div id="mmViewport">
+            <div class="obj trunk" data-nodeid="1" data-children="" style="left:0;top:0;">
+                <textarea class="mmTitle tScale tCenter" name="MindMapTitle">My Mind Map</textarea>
+                <div class="bubble"></div>
+            </div>
+        </div>
+    </div>
+    <div id="uiLayer">
+        <div id="topbar">
+            <div class="tbTab" id="file">
+                <button class="tbTitle tScale tCenter" onclick="openMenu(this)">File</button>
+                <div class="tbContent">
+                    <button class="tbOption tScale" id="tbNew">New</button>
+                    <button class="tbOption tScale" id="tbOpen">Open</button>
+                    <button class="tbOption tScale" id="tbSave">Save As</button>
+                </div>
+            </div>
+            <div class="tbTab" id="edit">
+                <button class="tbTitle tScale tCenter" onclick="openMenu(this)">Edit</button>
+                <div class="tbContent">
+                    <!-- <button class="tbOption tScale" id="tbUndo">Undo</button>
+                    <button class="tbOption tScale" id="tbRedo">Redo</button> -->
+                    <button class="tbOption tScale" id="tbDefaultCol">Restore Original Colours</button>
+                    <!-- <button class="tbOption tScale" id="tbTCmode">Only Bubble Parent</button> -->
+                    <button class="tbOption tScale" id="tbISnode">Insert Sibling Node</button>
+                    <button class="tbOption tScale" id="tbISlist">Insert Sibling List</button>
+                    <button class="tbOption tScale" id="tbIBP">Insert Bulletpoint</button>
+                </div>
+            </div>
+            <div class="tbTab" id="view">
+                <button class="tbTitle tScale tCenter" onclick="openMenu(this)">View</button>
+                <div class="tbContent">
+                    <button class="tbOption tScale" id="tbZoom">Zoom In</button>
+                    <button class="tbOption tScale" id="tbZoomOut">Zoom Out</button>
+                    <button class="tbOption tScale" id="tbZoomFit">Zoom Fit</button>
+                    <button class="tbOption tScale" id="tbZoomDefault">Reset Zoom</button>
+                    <button class="tbOption tScale" id="tbChangeTheme">Change Theme</button>
+                    <button class="tbOption tScale" id="tbDont">Dont Click This</button>
+                    <button class="tbOption tScale" id="tbHideUi">Hide UI</button>
+                </div>
+            </div>
+            <div class="tbTab" id="help">
+                <button class="tbTitle tScale tCenter" onclick="openMenu(this)">Help</button>
+                <div class="tbContent">
+                    <button class="tbOption tScale" id="tbGuide">Guide</button>
+                    <button class="tbOption tScale" id="tbKeybinds">Keybinds</button>
+                    <button class="tbOption tScale" id="tbAboutMe">About Me</button>
+                </div>
+            </div>
+        </div>
+        <div id="sidebar">
+            <div id="propertiesMenu">
+            </div>
+
+            <div id="insertMenu">
+                <p id="insertTitle" class="tScale tCenter">Insert Objects</p>
+                <button onclick="createNode()" id="insertButtonsLU" class="insertButtons tScale">Node</button>
+                <button onclick="createList()" id="insertButtonsRU" class="insertButtons tScale">List</button>
+                <button onclick="CreateDesc()" id="insertButtonsLD" class="insertButtons tScale tScaleFull tCenter">Notes</button>
+                <button onclick="CreateInfo()" id="insertButtonsRD" class="insertButtons tScale">Info</button>
+            </div>
+        </div>
+        <p id="promoText" class="tScale tScaleFull">Map My Mind.</p>
+        <p id="sloganText" class="tScale">Mapping your Mind, One Map at a Time.</p>
+    </div>
+    <div id="popupLayer">
+        <div id="warningPopup" class="popup" style="visibility: hidden;">
+            <div class="popupBackground"></div>
+            <div class="popupBox">
+                <p class="popupTitle tScale tCenter">Warning</p>
+                <div class="popupContent">
+                    <p id="wpText" class="tScale tCenter">By doing this, it will <span style="color:red;">Fully Delete the current loaded mindmap.</span> Please save it before doing so.</p>
+                </div>
+                <button id="wpCancel" class="popupButton tScale">Cancel</button>
+                <button id="wpContinue" class="popupButton tScale">Continue</button>
+            </div>
+        </div>
+    </div>
+   <div id="portraitBlock">
+    <p id="portraitText" class="tScale tCenter">Hey uhh, can you be so kind to just, flip you screen to landscape? That would be nice!</p>
+   </div>
+    <div id="objectToClone" style="width:0px;height:0px;display: none;">
+        <!-- To the people who are in inspect element, DO NOT EDIT ANYTHING HERE, YOU WILL BREAK THE ENTIRE WEBSITE. -->
+        <div id="node" class="obj node" line="-1" data-nodeid="-1" data-children="" data-parent="">
+            <textarea name="node text" class="nodeText tScale tCenter"></textarea>
+            <textarea name="node desc" class="description tExpand" style="visibility: hidden;"
+                data-maxline="8"></textarea>
+            <textarea name="node info" class="info infoSmall tScale tCenter tScaleFull" style="visibility: hidden;"
+                maxlength="4"></textarea>
+            <div class="bubble"></div>
+        </div>
+        <div id="list" class="obj list" data-nodeid="-1" data-parent="" line="-1">
+            <textarea name="listText" class="listContent tExpand extraH" data-maxline="8.5" style="border-color: black;"></textarea>
+            <textarea name="listTitle" class="listTitle listTitleBottom tScale tCenter"
+                placeholder="List Title"></textarea>
+        </div>
+        <div id="line" class="line" data-parentNode="-1" data-childrenNode="-1" data-listid="-1">
+        </div>
+        <div id="propBool" class="property propBool">
+            <p class="propTitle tScale">Has Bubble:</p>
+            <div class="propContents">
+                <button class="propCheckbox" onclick="tickBox(this)">
+                        <image class="propCheck" src="Images/checkmark.png">
+                            </iamge>
+                </button>
+            </div>
+        </div>
+        <div id="propColour" class="property propColour">
+            <p class="propTitle tScale tCenter">Bubble colour:</p>
+            <div class="propContents">
+                <input type="color" class="propColourBox"></input>
+            </div>
+        </div>
+        <div id="propChoice" class="property propChoice">
+            <p class="propTitle tScale">Bubble Type:</p>
+            <div class="propContents propBelow evenSpread" style="align-items: center;">
+                <button class="propOption propOption1 tScale tCenter" onclick="selectChoice(this)">a</button>
+                <button class="propOption propOption2 tScale tCenter" onclick="selectChoice(this)">b</button>
+                <button class="propOption propOption3 tScale tCenter" onclick="selectChoice(this)">c</button>
+            </div>
+        </div>
+        <button id="propDelete" class="propDelete tScale tCenter" onclick="deleteObj()">Delete Node</button>
+    </div>
+    <img src="Images/Image.png" style="display: none;"></img>
+    <script src="JavaScripts/ViewportPanning+nodeMoving.js"></script>
+    <script src="JavaScripts/TextEditing+Selection.js"></script>
+    <script src="JavaScripts/Topbar.js"></script>
+    <script src="JavaScripts/FileStuff.js"></script>
+</body>
+
+</html>

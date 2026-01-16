@@ -1,0 +1,540 @@
+:root {
+    --primary: #ffffff;
+    --primaryD: #d0d0d0;
+    --primaryD2: #7d7d7d;
+    --secondary: #8aefff;
+    --secondaryL: #b9f5ff;
+    --secondaryL2: #d9f9ff;
+    --secondaryL3: #f3fcff;
+    --secondaryD: #7cd4e1;
+    --object: #8affd2;
+    --objectL: #d0ffed;
+    --opposite: #18323d;
+    --oppositeL: #2b3439;
+    --oppositeT: #18232d2b;
+    --selection: #0099ff;
+    --checkboxTint: brightness(0) saturate(100%) invert(14%) sepia(57%) saturate(513%) hue-rotate(152deg) brightness(94%) contrast(90%);
+}
+
+[data-theme="dark"] {
+    --primary: #111f2d;
+    --primaryD: #223b54;
+    --primaryD2: #0e171b;
+    --secondary: #395c7e;
+    --secondaryL: #2b3a48;
+    --secondaryL2: #242d36;
+    --secondaryL3: #1a1f25;
+    --secondaryL: #27435f;
+    --object: #39747e;
+    --objectL: #33545a;
+    --opposite: #b0b9c4;
+    --oppositeD: #7b7b7b;
+    --oppositeT: #b0b9c42b;
+    --selection: #0099ff;
+    --checkboxTint: filter: brightness(0) saturate(100%) invert(83%) sepia(11%) saturate(256%) hue-rotate(173deg) brightness(88%) contrast(90%);
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: blue;
+    overflow: hidden;
+    height: 100%;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+    position: fixed;
+}
+
+#portraitBlock {
+    display: none;
+    width: 100dvw;
+    height: 100dvh;
+    background-color: var(--primary);
+    position: fixed;
+    z-index: 1000;
+}
+
+#portraitText {
+    width: 100%;
+    height: 95%;
+    color: var(--opposite);
+}
+
+@media (orientation: portrait) {
+    #portraitBlock {
+        display: block;
+    }
+}
+
+* {
+    -webkit-user-drag: none;
+    user-select: none;
+    margin: 0;
+    /* outline: 1px solid red; */
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+#topbar {
+    background-color: var(--secondaryL2);
+    height: 3%;
+    font-size: 30px;
+    width: 100vw;
+    float: left;
+    z-index: 1001;
+    position: fixed;
+    display: flex;
+    /* gap:0.5%; */
+    pointer-events: auto;
+    /* transform: translate(-177px,0); */
+    border-bottom: 0.4vw solid var(--opposite);
+}
+
+#sidebar {
+    float: right;
+    /* width: 270px; */
+    width: 15vw;
+    height: 97%;
+    z-index: 999;
+    top: 100%;
+    overflow: hidden;
+    position: relative;
+    pointer-events: auto;
+    transform: translate(0, -100%);
+    border-left: 0.4vw solid var(--opposite);
+    background-image: linear-gradient(to right, var(--secondaryL), var(--secondaryL2));
+}
+
+#propertiesMenu {
+    width: 100%;
+    height: 65%;
+    position: absolute;
+    border-bottom: 0.4vw solid var(--opposite);
+    z-index: 2;
+}
+
+#propertiesMenu>div {
+    margin-top: 4%;
+}
+
+.property {
+    width: 100%;
+    position: relative;
+    /* background-color: darkgreen; */
+    height: 12%;
+}
+
+/* .propChoice {
+    margin-bottom: 11% !important;
+} */
+
+.propTitle {
+    width: 40%;
+    font-size: 100%;
+    height: 100%;
+    position: relative;
+    align-content: center;
+    padding-left: 3%;
+    color: var(--opposite);
+}
+
+.propChoice {
+    height: 16%;
+    /* margin-top: 0% !important; */
+}
+
+.propChoice>.propTitle {
+    height: 50%;
+}
+
+.propChoice>.propContents {
+    height: 50%;
+    top: 50%;
+}
+
+.propContents {
+    width: 51%;
+    height: 100%;
+    position: absolute;
+    left: 46%;
+    top: 0;
+    overflow: hidden;
+}
+
+.propCheckbox {
+    height: 100%;
+    aspect-ratio: 1;
+    position: relative;
+    /* accent-color: var(--primary); */
+    background-color: var(--secondaryL2);
+    /* left: 8%; */
+    border-radius: 10%;
+    border: 0.4vw, var(--opposite) solid;
+}
+
+.propTinter {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--secondary);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+.propTinter::after {
+    background: var(--secondary);
+    mix-blend-mode: multiply;
+}
+
+.propCheck {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border: 0;
+    pointer-events: none;
+    filter: var(--checkboxTint);
+}
+
+.propColourBox {
+    width: 60%;
+    height: 100%;
+    position: relative;
+    left: 0%;
+    background-color: rgba(0, 0, 0, 0);
+    transform: scale(1.6);
+    border: none;
+}
+
+.evenSpread {
+    display: flex;
+
+}
+
+.propOption {
+    min-width: 0;
+    margin: 0;
+    height: 100%;
+    flex: 1 1 calc(100% / 3);
+    background-color: var(--secondaryL3);
+    padding: 0;
+    border-radius: 10%;
+    border: 0.25vw, var(--opposite) solid;
+    color: var(--opposite);
+}
+
+.propSelected {
+    background-color: var(--primaryD);
+}
+
+.propBelow {
+    top: 100%;
+    width: 100%;
+    left: 0;
+    transform: translate(0);
+    padding: 0;
+    margin: 0;
+}
+
+.propDelete {
+    height: 8%;
+    width: 80%;
+    background-color: var(--secondary);
+    left: 50%;
+    transform: translate(-50%, -100%);
+    top: 97%;
+    position: absolute;
+    color: var(--opposite);
+}
+
+#insertMenu {
+    /* background-color: red; */
+    /* background-image: linear-gradient(to left, var(--secondaryL), var(--secondaryL2)); */
+    width: 100%;
+    top: 100%;
+    transform: translate(0, -100%);
+    height: 35%;
+    position: absolute;
+}
+
+#insertTitle {
+    width: 96%;
+    height: 18%;
+    top: 2%;
+    left: 50%;
+    transform: translate(-50%);
+    position: relative;
+    color: var(--opposite);
+}
+
+.insertButtons {
+    /* height: 30%; */
+    aspect-ratio: 1;
+    width: 35%;
+    font-size: 100%;
+    padding: 0;
+    border-radius: 10%;
+    border: 0.25vw, var(--opposite) solid;
+    background-color: var(--secondaryL3);
+    position: absolute;
+    color: var(--opposite);
+}
+
+.insertButtons:disabled {
+    background-color: var(--primaryD2);
+    color: var(--oppositeL);
+}
+
+#insertButtonsLU {
+    left: 10%;
+    top: 20%;
+}
+
+#insertButtonsRU {
+    left: 90%;
+    top: 20%;
+    transform: translate(-100%);
+}
+
+#insertButtonsLD {
+    left: 10%;
+    top: 95%;
+    transform: translate(0, -100%);
+}
+
+#insertButtonsRD {
+    left: 90%;
+    top: 95%;
+    transform: translate(-100%, -100%);
+}
+
+#mmViewport {
+    /* background-color: rgba(255, 0, 255, 0.5); */
+    left: calc(50vw - 50vw);
+    top: 50vh;
+    width: 70vw;
+    aspect-ratio: 1;
+    z-index: 1;
+    position: fixed;
+    pointer-events: none;
+}
+
+#mmViewport>div {
+    pointer-events: auto;
+}
+
+#background {
+    width: 100%;
+    aspect-ratio: 1;
+    background-image: url(Images/Grid.png);
+    background-color: var(--primary);
+    background-size: 5vw;
+    z-index: 0;
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#mmLayer {
+    z-index: 1;
+}
+
+#selectionArea {
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0.01);
+}
+
+#selectionArea,
+.obj {
+    touch-action: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+textarea,
+input,
+[contenteditable] {
+    touch-action: auto;
+}
+
+.obj {
+    pointer-events: auto;
+}
+
+#uiLayer {
+    z-index: 2;
+    pointer-events: none;
+}
+
+#uiLayer,
+#mmLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.tbTab {
+    height: 100%;
+    width: 5%;
+    position: relative;
+}
+
+.tbTitle {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    text-align: left;
+    border: none;
+    background-color: #00000000;
+    color: var(--opposite);
+}
+
+.tbTitle:hover {
+    background-color: var(--oppositeT);
+}
+
+.tbContent {
+    width: 150%;
+    height: 125%;
+    left: 0;
+    right: auto;
+    top: 100%;
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.tbOption {
+    width: 250%;
+    height: 100%;
+    /* transform: translateY(-6px); */
+    pointer-events: all;
+    text-align: left;
+    background-color: var(--secondaryL3);
+    margin: 0;
+    line-height: 1;
+    border: var(--oppositeT);
+    border-style: solid;
+    color: var(--opposite);
+}
+
+#promoText,
+#sloganText {
+    width: 50vw;
+    position: absolute;
+    flex: none;
+    height: 8vh;
+    left: calc(50% - 7.5vw);
+    transform: translate(-50%);
+    top: 4vh;
+    z-index: 1;
+    opacity: 0.5;
+    text-align: center;
+    align-content: center;
+    color: var(--secondaryD);
+}
+
+#sloganText {
+    top: 12vh;
+    height: 6vh;
+}
+
+.popupLayer {
+    width: 100%;
+    height: 100%;
+    background: none;
+    z-index: 3;
+}
+
+.popup {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+}
+
+.popupBackground {
+    width: 100%;
+    height: 100%;
+    background-color: #000000B0;
+    z-index: 1;
+    position: absolute;
+}
+
+.popupBox {
+    aspect-ratio: 8 / 4;
+    height: 30%;
+    background-image: linear-gradient(to right, var(--secondary), var(--secondaryL));
+    background-color: var(--secondary);
+    border-radius: 10%;
+    border: 0.4vw solid var(--opposite);
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+}
+
+.popupTitle {
+    width: 100%;
+    height: 15%;
+    position: relative;
+    color: var(--opposite);
+}
+
+.popupContent {
+    width: 90%;
+    height: 65%;
+    position: relative;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    color: var(--opposite);
+}
+
+.popupButton {
+    height: 20%;
+    width: 30%;
+    position: absolute;
+    top: calc(100% + 0.5vw);
+    transform: translate(0, -50%);
+    background-image: linear-gradient(to right, var(--secondary), var(--secondary));
+    color: var(--opposite);
+    border-radius: 10%;
+    border: 0.3vw solid var(--opposite);
+}
+
+#wpText {
+    width: 100%;
+    height: 80%;
+    color: var(--opposite);
+    transform: translate(0, 10%);
+}
+
+#wpCancel {
+    left: 15%;
+}
+
+#wpContinue {
+    left: 85%;
+    transform: translate(-100%, -50%);
+    background-color: red;
+    background-image: none;
+}
