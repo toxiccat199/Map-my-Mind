@@ -491,6 +491,10 @@ input,
     position: relative;
     transform: translate(-50%, -50%);
 }
+#pastePopup > .popupBox {
+    height: 45%;
+    aspect-ratio: 14 / 8;
+}
 
 .popupTitle {
     width: 100%;
@@ -527,9 +531,38 @@ input,
     color: var(--opposite);
     transform: translate(0, 10%);
 }
+#paText {
+    width: 100%;
+    height: 40%;
+    color: var(--opposite);
+    transform: translate(0, 10%);
+}
+#paMindmap {
+    width: 100%;
+    height: 55%;
+    color: var(--secondary);
+    background-color: var(--oppositeL);
+    top: 100%;
+    transform: translate(0%,-100%);
+    position: absolute;
+}
 
 #wpCancel {
     left: 15%;
+}
+#paCancel {
+    left: 10%;
+}
+#paOpen {
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#paHelp {
+    left: 90%;
+    transform: translate(-100%, -50%);
+}
+#paCancel, #paOpen, #paHelp {
+    width: 25%;
 }
 
 #wpContinue {
