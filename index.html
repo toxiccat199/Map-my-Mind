@@ -6,7 +6,7 @@
     <title>Map my Mind</title>
     <link rel="icon" type="image/x-icon" href="Images/icon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="light">
     <link rel="stylesheet" href="UiStyle.css">
     <link rel="stylesheet" href="NodeStyle.css">
     <script src="JavaScripts/ImportantFunctions.js"></script>
@@ -19,7 +19,8 @@
 
 <body>
     <div id="mmLayer">
-        <p id="noUiInfo" style="z-index: 100;position: relative;color:var(--opposite);height: 3vh;" class="tScale">Alt+H to add back ui</p>
+        <p id="noUiInfo" style="z-index: 100;position: relative;color:var(--opposite);height: 3vh;" class="tScale">Alt+H
+            to add back ui</p>
         <div id="selectionArea"></div>
         <div id="background"></div>
         <div id="mmViewport">
@@ -80,7 +81,8 @@
                 <p id="insertTitle" class="tScale tCenter">Insert Objects</p>
                 <button onclick="createNode()" id="insertButtonsLU" class="insertButtons tScale">Node</button>
                 <button onclick="createList()" id="insertButtonsRU" class="insertButtons tScale">List</button>
-                <button onclick="CreateDesc()" id="insertButtonsLD" class="insertButtons tScale tScaleFull tCenter">Notes</button>
+                <button onclick="CreateDesc()" id="insertButtonsLD"
+                    class="insertButtons tScale tScaleFull tCenter">Notes</button>
                 <button onclick="CreateInfo()" id="insertButtonsRD" class="insertButtons tScale">Info</button>
             </div>
         </div>
@@ -99,10 +101,24 @@
                 <button id="wpContinue" class="popupButton tScale">Continue</button>
             </div>
         </div>
+        <div id="pastePopup" class="popup" style="visibility: hidden;">
+            <div class="popupBackground"></div>
+            <div class="popupBox">
+                <p class="popupTitle tScale tCenter">Paste Mindmap</p>
+                <div class="popupContent">
+                    <p id="paText" class="tScale tCenter">It seems your school/work has blocked opening/saving. As an alternative, paste your mindmap in here.</p>
+                    <textarea id="paMindmap"></textarea>
+                </div>
+                <button id="paCancel" class="popupButton tScale">Cancel</button>
+                <button id="paOpen" class="popupButton tScale">Continue</button>
+                <button id="paHelp" class="popupButton tScale">Help</button>
+            </div>
+        </div>
     </div>
-   <div id="portraitBlock">
-    <p id="portraitText" class="tScale tCenter">Hey uhh, can you be so kind to just, flip you screen to landscape? That would be nice!</p>
-   </div>
+    <div id="portraitBlock">
+        <p id="portraitText" class="tScale tCenter">Hey uhh, can you be so kind to just, flip you screen to landscape?
+            That would be nice!</p>
+    </div>
     <div id="objectToClone" style="width:0px;height:0px;display: none;">
         <!-- To the people who are in inspect element, DO NOT EDIT ANYTHING HERE, YOU WILL BREAK THE ENTIRE WEBSITE. -->
         <div id="node" class="obj node" line="-1" data-nodeid="-1" data-children="" data-parent="">
@@ -114,7 +130,8 @@
             <div class="bubble"></div>
         </div>
         <div id="list" class="obj list" data-nodeid="-1" data-parent="" line="-1">
-            <textarea name="listText" class="listContent tExpand extraH" data-maxline="8.5" style="border-color: black;"></textarea>
+            <textarea name="listText" class="listContent tExpand extraH" data-maxline="8.5"
+                style="border-color: black;"></textarea>
             <textarea name="listTitle" class="listTitle listTitleBottom tScale tCenter"
                 placeholder="List Title"></textarea>
         </div>
@@ -124,8 +141,8 @@
             <p class="propTitle tScale">Has Bubble:</p>
             <div class="propContents">
                 <button class="propCheckbox" onclick="tickBox(this)">
-                        <image class="propCheck" src="Images/checkmark.png">
-                            </iamge>
+                    <image class="propCheck" src="Images/checkmark.png">
+                        </iamge>
                 </button>
             </div>
         </div>
