@@ -117,34 +117,48 @@ function clearMindmap() {
     }
 }
 
-async function saveJSON(Json) {
-	console.log(Json)
-    const handle = await window.showSaveFilePicker({
-        suggestedName: "mindmap.json",
-        types: [{
-            description: "JSON",
-            accept: { "application/json": [".json"] }
-        }]
-    });
+async function saveJSON(json) {
+    if ("showSaveFilePicker" in window) {
+        try {
+            const handle = await window.showSaveFilePicker({
+                suggestedName: "mapmymind.json",
+                types: [{
+                    description: "JSON Files",
+                    accept: { "application/json": [".json"] }
+                }]
+            });
 
-    const writable = await handle.createWritable();
-    await writable.write(Json);
-    await writable.close();
+            const writable = await handle.createWritable();
+            await writable.write(json);
+            await writable.close();
+        } catch {
+
+        }
+    } else {
+        await navigator.clipboard.writeText(json);
+        alert("Your school/work has blocked saving and downloading. Your mindmap has been saved to your clipboard. Place it in a document!")
+    }
 }
 async function openJSON() {
     if (await mmlostWarning() == 0) return
 
-    const [fileHandle] = await window.showOpenFilePicker({
-        types: [{
-            description: 'JSON Files',
-            accept: { 'application/json': ['.json'] }
-        }],
-        multiple: false
-    });
+    if ("showOpenFilePicker" in window) {
+        const [fileHandle] = await window.showOpenFilePicker({
+            types: [{
+                description: 'JSON Files',
+                accept: { 'application/json': ['.json'] }
+            }],
+            multiple: false
+        });
 
-    const file = await fileHandle.getFile();
-    const text = await file.text();
-    JSONtomindmap(text)
+        const file = await fileHandle.getFile();
+        const text = await file.text();
+        JSONtomindmap(text)
+    } else {
+        console.log(":(")
+        if (await blockedOpen() == 0) return
+        try {JSONtomindmap(document.getElementById("paMindmap").value)} catch {}
+    }
     window.funcs.updateTheme()
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -176,33 +190,66 @@ function sleep(ms) {
 async function mmlostWarning() {
     return new Promise(resolve => {
 
-    const warning = document.getElementById("warningPopup")
-    const cancelB = document.getElementById("wpCancel")
-    const continueB = document.getElementById("wpContinue")
+        const warning = document.getElementById("warningPopup")
+        const cancelB = document.getElementById("wpCancel")
+        const continueB = document.getElementById("wpContinue")
 
-    let result = null
+        let result = null
 
-    function onClickCancel() {
-        warning.style.visibility = "hidden"
-        cancelB.removeEventListener("mousedown",onClickCancel)
-        continueB.removeEventListener("mousedown",onClickContinue)
-        result = 0
-    }
-    function onClickContinue() {
-        warning.style.visibility = "hidden"
-        cancelB.removeEventListener("mousedown",onClickCancel)
-        continueB.removeEventListener("mousedown",onClickContinue)
-        result = 1
-    }
+        function onClickCancel() {
+            warning.style.visibility = "hidden"
+            cancelB.removeEventListener("mousedown", onClickCancel)
+            continueB.removeEventListener("mousedown", onClickContinue)
+            result = 0
+        }
+        function onClickContinue() {
+            warning.style.visibility = "hidden"
+            cancelB.removeEventListener("mousedown", onClickCancel)
+            continueB.removeEventListener("mousedown", onClickContinue)
+            result = 1
+        }
 
-    warning.style.visibility = "visible"
-    cancelB.addEventListener("mousedown",onClickCancel)
-    continueB.addEventListener("mousedown",onClickContinue)
+        warning.style.visibility = "visible"
+        cancelB.addEventListener("mousedown", onClickCancel)
+        continueB.addEventListener("mousedown", onClickContinue)
 
-    function loop() {
-        if (result === null) {setTimeout(loop, 100)} else {resolve(result)}
-    }
-    loop()
+        function loop() {
+            if (result === null) { setTimeout(loop, 100) } else { resolve(result) }
+        }
+        loop()
+    })
+}
+
+async function blockedOpen() {
+    return new Promise(resolve => {
+        const popup = document.getElementById("pastePopup")
+        const cancel = document.getElementById("paCancel")
+        const open = document.getElementById("paOpen")
+
+        let result = null
+
+        function onClickCancel() {
+            popup.style.visibility = "hidden"
+            cancel.removeEventListener("mousedown", onClickCancel)
+            open.removeEventListener("mousedown", onClickContinue)
+            result = 0
+        }
+        function onClickContinue() {
+            popup.style.visibility = "hidden"
+            cancel.removeEventListener("mousedown", onClickCancel)
+            open.removeEventListener("mousedown", onClickContinue)
+            result = 1
+        }
+
+        popup.style.visibility = "visible"
+        cancel.addEventListener("mousedown", onClickCancel)
+        open.addEventListener("mousedown", onClickContinue)
+
+        function loop() {
+            console.log("cmon")
+            if (result === null) { setTimeout(loop, 100) } else { resolve(result) }
+        }
+        loop()
     })
 }
 
