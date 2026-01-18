@@ -16,8 +16,8 @@
 
     function update1Height(element) {
         const text = element.value ?? element.innerText
-        const width = element.clientWidth+""
-        
+        const width = element.clientWidth + ""
+
         if (element.dataset.lastText == text && element.dataset.lastWidth == width) return
         if (width == undefined || text == undefined) return
 
@@ -31,7 +31,7 @@
         } else {
             element.style.height = height + "vh";
         }
-        element.style.fontSize = element.clientWidth / (Number(element.dataset.maxline)??10) + "px"
+        element.style.fontSize = element.clientWidth / (Number(element.dataset.maxline) ?? 10) + "px"
     }
 
     function loopFun() {
@@ -60,8 +60,8 @@
         element.offsetWidth;
 
         const text = element.value ?? element.innerText
-        const width = element.clientWidth+""
-        
+        const width = element.clientWidth + ""
+
         if (element.dataset.lastText == text && element.dataset.lastWidth == width) return
         if (width == undefined || text == undefined) return
         console.log("workin")
@@ -131,15 +131,15 @@
         let size = viewport.clientWidth / window.innerWidth * 0.4
         for (const obj of viewport.children) {
             let bub = obj.getElementsByClassName("bubble")[0]
-			let desc = obj.getElementsByClassName("description")[0]
-			let info = obj.getElementsByClassName("info")[0]
+            let desc = obj.getElementsByClassName("description")[0]
+            let info = obj.getElementsByClassName("info")[0]
             if (bub) {
                 bub.style["border-width"] = size + "vw"
             }
-			if (desc) {
-				desc.style["border-width"] = size + "vw"
-				info.style["border-width"] = size + "vw"
-			}
+            if (desc) {
+                desc.style["border-width"] = size + "vw"
+                info.style["border-width"] = size + "vw"
+            }
         }
         for (const obj of viewport.children) {
             let listC = obj.getElementsByClassName("listContent")[0]
@@ -168,23 +168,42 @@
         const viewport = document.getElementById("mmViewport")
 
         background.style.backgroundPositionX = viewport.style.left
-        background.style.backgroundPositionY = Number(viewport.style.top.slice(0,-1)) * (window.innerHeight/window.innerWidth)+"%"
+        background.style.backgroundPositionY = Number(viewport.style.top.slice(0, -1)) * (window.innerHeight / window.innerWidth) + "%"
         background.style.size = Number(viewport.style.width.slice(0, -2)) / 18 + "vw"
         requestAnimationFrame(loop)
     }
-    setTimeout(loop,100)
+    setTimeout(loop, 100)
 }
 
 // fix app resise
 {
-	function resizeApp() {
-  		const vv = window.visualViewport;
-  		const app = document.getElementById("app");
-		if (!app) return
-  		app.style.width  = vv.width + "px";
-  		app.style.height = vv.height + "px";
-	}	
-	
-	resizeApp();
-	window.visualViewport.addEventListener("resize", resizeApp);
+    function resizeApp() {
+        const vv = window.visualViewport;
+        const app = document.getElementById("app");
+        if (!app) return
+        app.style.width = vv.width + "px";
+        app.style.height = vv.height + "px";
+    }
+
+    resizeApp();
+    window.visualViewport.addEventListener("resize", resizeApp);
+}
+
+// no bubble selection fix
+{
+    let lastSel = null
+
+    function loop() {
+        const selection = window.funcs.getSelected()
+            if (selection != lastSel) {
+                for (const text of document.querySelectorAll(".nodeText")) {
+                        text.style.color = ""
+                }
+                if (selection && selection.dataset.prophbub == "false") selection.querySelector(".nodeText").style.color = "var(--selection)"
+                // console.log(selection.dataset.prophbub == "false", selection.querySelector(".nodeText").style.color)
+            }
+        lastSel = selection
+        requestAnimationFrame(loop)
+    }
+    document.addEventListener("DOMContentLoaded", loop)
 }
