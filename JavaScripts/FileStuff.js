@@ -222,6 +222,8 @@ async function mmlostWarning() {
 
 async function blockedOpen() {
     return new Promise(resolve => {
+        document.getElementById("paMindmap").value = ""
+
         const popup = document.getElementById("pastePopup")
         const cancel = document.getElementById("paCancel")
         const open = document.getElementById("paOpen")
@@ -267,3 +269,7 @@ document.getElementById("tbSave").addEventListener("mousedown", () => {
 document.getElementById("tbNew").addEventListener("mousedown", newMM)
 
 document.getElementById("tbOpen").addEventListener("mousedown", openJSON)
+
+document.getElementById("paHelp").addEventListener("mousedown", ()=>{
+    window.open("guide.html#blocked","_blank")
+})
