@@ -18,10 +18,15 @@ function updateNode(node) {
             bubble.style["opacity"] = hasBubble == "true" ? "1" : "0.1"
             bubble.style["border-radius"] = hasBubble == "true" ? "50% " : "10%"
         }
+        if (node.classList.contains("selected")) {
+            console.log(hasBubble == "true" ? window.props.tcol : "var(--selection)")
+            node.querySelector(".nodeText").style.color = hasBubble == "true" ? window.props.tcol : "var(--selection)"
+        }
     }
 
     // Size
     let size = node.dataset.propsize || "1"
+    let lastSize = node.style.width == "10%" ? "1" : node.style.width == "12%" ? "2" : "3"
     switch (size) {
         case "1": {
             node.style.width = "10%"
@@ -120,3 +125,11 @@ function checkForColour() {
     }
 }
 checkForColour()
+
+window.addEventListener("addlines", () => {
+    for (const obj of document.getElementById("mmViewport").children) {
+        if (obj.classList.contains("node")) updateNode(obj)
+        if (obj.classList.contains("list")) updateList(obj)
+        if (obj.classList.contains("obj")) updateColours(obj)
+    }
+})
