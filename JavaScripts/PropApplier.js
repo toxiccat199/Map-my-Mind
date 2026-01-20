@@ -78,7 +78,6 @@ function updateColours(obj) {
 
         if ((obj.dataset.prophbub ?? "true") == "true" || window.props.selected != obj.dataset.nodeid) {
             obj.getElementsByClassName("nodeText")[0].style.color = textColour
-            console.log(obj.dataset.nodeid)
         } else {
             obj.getElementsByClassName("nodeText")[0].style.color = "var(--selection)"
         }
@@ -113,18 +112,32 @@ window.addEventListener("selectedChanged", () => {
     if (selected.classList.contains("list")) updateList(selected)
 })
 
-function checkForColour() {
-    setTimeout(() => {
-        checkForColour()
-    }, (0));
-    const prop = document.activeElement
-    // console.log(!prop, !prop.parentElement.parentElement, prop.parentElement.parentElement?, prop.tagName != "INPUT")
-    if (!prop || !prop.parentElement.parentElement || !prop.parentElement.parentElement.classList.contains("propColour") || prop.tagName != "INPUT") return
-    for (const obj of document.getElementById("mmViewport").children) {
-        updateColours(obj)
+{
+    let lastTcol = null
+    let lastBcol = null
+    let lastOcol = null
+
+    function checkForColour() {
+        setTimeout(() => {
+            checkForColour()
+        }, (0));
+
+        const tcol = window.props.tcol
+        const bcol = window.props.bcol
+        const ocol = window.props.ocol
+
+        // console.log(!prop, !prop.parentElement.parentElement, prop.parentElement.parentElement?, prop.tagName != "INPUT")
+        if (tcol == lastTcol && bcol == lastBcol && ocol == lastOcol) return
+        lastTcol = tcol
+        lastBcol = bcol
+        lastOcol = ocol
+
+        for (const obj of document.getElementById("mmViewport").children) {
+            updateColours(obj)
+        }
     }
+    document.addEventListener("DOMContentLoaded",checkForColour)
 }
-checkForColour()
 
 window.addEventListener("addlines", () => {
     for (const obj of document.getElementById("mmViewport").children) {

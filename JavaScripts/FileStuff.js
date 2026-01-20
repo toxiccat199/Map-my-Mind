@@ -78,7 +78,7 @@ function JSONtomindmap(JSONstring) {
             obj.dataset.prophline = nodeProps.properties.hline
             obj.dataset.prophbub = nodeProps.properties.hbub
             obj.dataset.propsize = nodeProps.properties.size
-
+            console.log(nodeProps.additions, nodeProps.additions.desc)
             if (nodeProps.additions.desc != "") {
                 obj.classList.add("hasDesc")
                 obj.getElementsByClassName("description")[0].value = nodeProps.additions.desc
@@ -145,8 +145,12 @@ async function openJSON() {
     if ("showOpenFilePicker" in window) {
         const [fileHandle] = await window.showOpenFilePicker({
             types: [{
-                description: 'JSON Files',
-                accept: { 'application/json': ['.json'] }
+                description: 'Mindmap File',
+                accept: {
+                    'application/json': ['.json'],
+                    'text/plain': ['.text']
+                
+                }
             }],
             multiple: false
         });

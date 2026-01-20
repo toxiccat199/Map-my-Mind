@@ -25,6 +25,11 @@
         element.dataset.lastWidth = width
 
         element.style.height = "auto"
+        if (element.style.scrollHeight == undefined) {
+            requestAnimationFrame(()=>update1Height(element))
+            return
+        }
+
         let height = ((element.scrollHeight * 100) / window.innerHeight)
         if (element.classList.contains("extraH")) {
             element.style.height = "Calc(" + height + "vh + 40%)"

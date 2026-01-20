@@ -279,7 +279,7 @@ function loopCheck() {
     for (const obj of propMenu.children) {
         if (!obj.classList.contains("propColour")) continue
         const colourBox = obj.getElementsByClassName("propColourBox")[0]
-        if (!colourBox || !document.activeElement.classList.contains("propColourBox")) continue
+        if (!colourBox || document.activeElement.parentElement.parentElement?.dataset?.getid != obj.dataset.getid) continue
 
         let type = obj.dataset.getid
         switch (type) {
@@ -307,7 +307,9 @@ function loopCheck() {
         }
     }
 
-    requestAnimationFrame(loopCheck)
+    setTimeout(() => {
+        loopCheck()
+    }, 20);
 }
 
 function fixInsertMenu() { // bonus!
