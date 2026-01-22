@@ -41,7 +41,6 @@ function createObject(originalObject, isSibling) {
 
     const lineid = createLine(parent, newObject)
     newObject.dataset.line = lineid
-
     return newObject
 }
 
@@ -52,13 +51,16 @@ function createNode(isSibling) {
         node.dataset.prophbub = "false"
         window.funcs.getObj(node.dataset.parent).dataset.prophbub = "true"
     }
-
+    window.funcs.updateTheme()
     // node.getElementsByClassName("bubble")[0].style.backgroundColour = `var(--layer${window.funcs.getNodeDepth(node.dataset.nodeid)-1})`
 }
 
 function createList(isSibling) {
     const list = createObject(document.getElementById("list"),isSibling)
     focus(list.getElementsByClassName("listContent")[0])
+    
+    window.funcs.updateTheme()
+
 }
 
 function createLine(pnode, cnode) {
@@ -90,6 +92,8 @@ function createLine(pnode, cnode) {
             lastppos = [pnode.style.left,pnode.style.top]
             lastcpos = [cnode.style.left,cnode.style.top]
             requestAnimationFrame(lineLoop)
+        } else {
+            line.remove()
         }
     }
 
@@ -100,8 +104,7 @@ function createLine(pnode, cnode) {
 
 function updateLine(pnode, cnode, pnodeBubble, cnodeBubble, line, lastppos, lastcpos) {
     if (lastppos[0] == pnode.style.left && lastppos[1] == pnode.style.top && lastcpos[0] == cnode.style.left && lastcpos[1] == cnode.style.top) return
-    console.log(cnode.dataset.nodeid)
-    function getRect(element, container) {
+    function getRect(element) {
         const elementRect = element.getBoundingClientRect()
         const containerRect = document.getElementById("mmViewport").getBoundingClientRect()
 

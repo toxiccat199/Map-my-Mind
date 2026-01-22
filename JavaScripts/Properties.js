@@ -287,22 +287,22 @@ function loopCheck() {
                 if (lastTcol != colourBox.value) {
                     window.props.tcol = colourBox.value
                     lastTcol = colourBox.value
-                    break
                 }
+                break
             }
             case "bcol": {
                 if (lastBcol != colourBox.value) {
                     window.props.bcol = colourBox.value
                     lastBcol = colourBox.value
-                    break
                 }
+                break
             }
             case "ocol": {
                 if (lastOcol != colourBox.value) {
                     window.props.ocol = colourBox.value
                     lastOcol = colourBox.value
-                    break
                 }
+                break
             }
         }
     }

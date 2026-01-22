@@ -129,7 +129,7 @@ textarea[readonly] {
 /*list*/
 .list {
     width: 13%;
-    height: 15%;
+    aspect-ratio: 76/146;
     position: absolute;
     z-index: 1000;
 }

@@ -68,9 +68,13 @@ funcs = {
         const oldColour = document.documentElement.dataset.theme == "dark" ? "#000000" : "#b0b9c4"
         const newColour = document.documentElement.dataset.theme != "dark" ? "#000000" : "#b0b9c4"
 
+        console.log(window.props.tcol,oldColour,newColour)
+
         if (window.props.tcol == oldColour) window.props.tcol = newColour
         if (window.props.bcol == oldColour) window.props.bcol = newColour
         if (window.props.ocol == oldColour) window.props.ocol = newColour
+
+        console.log(window.props.tcol,oldColour,newColour)
 
         for (const obj of document.getElementById("mmViewport").children) {
             if (obj.classList.contains("node")) {

@@ -116,12 +116,17 @@ window.addEventListener("selectedChanged", () => {
     let lastTcol = null
     let lastBcol = null
     let lastOcol = null
+    let lastNodeCount = 1
 
     function checkForColour() {
         setTimeout(() => {
             checkForColour()
         }, (0));
+        cfcCheck1()
+        cfcCheck2()
+    }
 
+    function cfcCheck1() {
         const tcol = window.props.tcol
         const bcol = window.props.bcol
         const ocol = window.props.ocol
@@ -136,7 +141,18 @@ window.addEventListener("selectedChanged", () => {
             updateColours(obj)
         }
     }
-    document.addEventListener("DOMContentLoaded",checkForColour)
+    function cfcCheck2() {
+        const nodeCount = document.getElementById("mmViewport").children.length
+
+        if (lastNodeCount != nodeCount) {
+            lastBcol = nodeCount
+
+            for (const obj of document.getElementById("mmViewport").children) {
+                updateColours(obj)
+            }
+        }
+    }
+    document.addEventListener("DOMContentLoaded", checkForColour)
 }
 
 window.addEventListener("addlines", () => {

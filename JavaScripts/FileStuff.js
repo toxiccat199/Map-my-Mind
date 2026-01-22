@@ -72,6 +72,8 @@ function JSONtomindmap(JSONstring) {
         obj.style.left = nodeProps.posx
         obj.style.top = nodeProps.posy
 
+        obj.id = ""
+
         if (nodeProps.type == "node") {
             obj.getElementsByClassName("nodeText")[0].value = nodeProps.text
 
@@ -149,7 +151,7 @@ async function openJSON() {
                 accept: {
                     'application/json': ['.json'],
                     'text/plain': ['.text']
-                
+
                 }
             }],
             multiple: false
@@ -161,7 +163,7 @@ async function openJSON() {
     } else {
         console.log(":(")
         if (await blockedOpen() == 0) return
-        try {JSONtomindmap(document.getElementById("paMindmap").value)} catch {}
+        try { JSONtomindmap(document.getElementById("paMindmap").value) } catch { }
     }
     window.funcs.updateTheme()
 }
@@ -192,30 +194,32 @@ function sleep(ms) {
 }
 
 async function mmlostWarning() {
+    console.log("...")
+
+    const warning = document.getElementById("warningPopup")
+    const cancelB = document.getElementById("wpCancel")
+    const continueB = document.getElementById("wpContinue")
+
+    let result = null
+
+    function onClickCancel() {
+        warning.style.visibility = "hidden"
+        cancelB.removeEventListener("mousedown", onClickCancel)
+        continueB.removeEventListener("mousedown", onClickContinue)
+        result = 0
+    }
+    function onClickContinue() {
+        warning.style.visibility = "hidden"
+        cancelB.removeEventListener("mousedown", onClickCancel)
+        continueB.removeEventListener("mousedown", onClickContinue)
+        result = 1
+    }
+
+    warning.style.visibility = "visible"
+    cancelB.addEventListener("mousedown", onClickCancel)
+    continueB.addEventListener("mousedown", onClickContinue)
+
     return new Promise(resolve => {
-
-        const warning = document.getElementById("warningPopup")
-        const cancelB = document.getElementById("wpCancel")
-        const continueB = document.getElementById("wpContinue")
-
-        let result = null
-
-        function onClickCancel() {
-            warning.style.visibility = "hidden"
-            cancelB.removeEventListener("mousedown", onClickCancel)
-            continueB.removeEventListener("mousedown", onClickContinue)
-            result = 0
-        }
-        function onClickContinue() {
-            warning.style.visibility = "hidden"
-            cancelB.removeEventListener("mousedown", onClickCancel)
-            continueB.removeEventListener("mousedown", onClickContinue)
-            result = 1
-        }
-
-        warning.style.visibility = "visible"
-        cancelB.addEventListener("mousedown", onClickCancel)
-        continueB.addEventListener("mousedown", onClickContinue)
 
         function loop() {
             if (result === null) { setTimeout(loop, 100) } else { resolve(result) }
@@ -264,6 +268,15 @@ async function newMM() {
 
     if (value == 0) return
     clearMindmap()
+
+    window.props.tcol = "#000000"
+    window.props.bcol = "#000000"
+    window.props.ocol = "#000000"
+    requestAnimationFrame(window.funcs.updateTheme)
+
+    window.funcs.deselect()
+    window.props.selected = 0
+    document.querySelector(".selected")?.classList?.remove("selected")
 }
 
 document.getElementById("tbSave").addEventListener("mousedown", () => {
@@ -274,6 +287,6 @@ document.getElementById("tbNew").addEventListener("mousedown", newMM)
 
 document.getElementById("tbOpen").addEventListener("mousedown", openJSON)
 
-document.getElementById("paHelp").addEventListener("mousedown", ()=>{
-    window.open("guide.html#blocked","_blank")
+document.getElementById("paHelp").addEventListener("mousedown", () => {
+    window.open("guide.html#blocked", "_blank")
 })
