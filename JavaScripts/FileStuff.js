@@ -80,10 +80,10 @@ function JSONtomindmap(JSONstring) {
             obj.dataset.prophline = nodeProps.properties.hline
             obj.dataset.prophbub = nodeProps.properties.hbub
             obj.dataset.propsize = nodeProps.properties.size
-            console.log(nodeProps.additions, nodeProps.additions.desc)
             if (nodeProps.additions.desc != "") {
                 obj.classList.add("hasDesc")
                 obj.getElementsByClassName("description")[0].value = nodeProps.additions.desc
+                requestAnimationFrame(()=> obj.getElementsByClassName("description")[0].style.height = "auto")
             }
             if (nodeProps.additions.info != "") {
                 obj.classList.add("hasInfo")
@@ -161,7 +161,6 @@ async function openJSON() {
         const text = await file.text();
         JSONtomindmap(text)
     } else {
-        console.log(":(")
         if (await blockedOpen() == 0) return
         try { JSONtomindmap(document.getElementById("paMindmap").value) } catch { }
     }
@@ -194,8 +193,6 @@ function sleep(ms) {
 }
 
 async function mmlostWarning() {
-    console.log("...")
-
     const warning = document.getElementById("warningPopup")
     const cancelB = document.getElementById("wpCancel")
     const continueB = document.getElementById("wpContinue")
@@ -256,7 +253,6 @@ async function blockedOpen() {
         open.addEventListener("mousedown", onClickContinue)
 
         function loop() {
-            console.log("cmon")
             if (result === null) { setTimeout(loop, 100) } else { resolve(result) }
         }
         loop()

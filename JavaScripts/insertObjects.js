@@ -58,7 +58,9 @@ function createNode(isSibling) {
 function createList(isSibling) {
     const list = createObject(document.getElementById("list"),isSibling)
     focus(list.getElementsByClassName("listContent")[0])
-    
+    list.getElementsByClassName("listContent")[0].value = "•"
+    list.getElementsByClassName("listTitle")[0].value = "Title"
+
     window.funcs.updateTheme()
 
 }
@@ -257,7 +259,9 @@ setTimeout(() => {
 window.addEventListener("addlines", () => {
     for (const obj of document.getElementById("mmViewport").children) {
         if (obj.classList.contains("node") || obj.classList.contains("list")) {
-            createLine(window.funcs.getObj(obj.dataset.parent), window.funcs.getObj(obj.dataset.nodeid))
+            const line = createLine(window.funcs.getObj(obj.dataset.parent), window.funcs.getObj(obj.dataset.nodeid))
+            console.log(line)
+            obj.dataset.line = line
         }
     }
 })

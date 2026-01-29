@@ -19,7 +19,6 @@ function updateNode(node) {
             bubble.style["border-radius"] = hasBubble == "true" ? "50% " : "10%"
         }
         if (node.classList.contains("selected")) {
-            console.log(hasBubble == "true" ? window.props.tcol : "var(--selection)")
             node.querySelector(".nodeText").style.color = hasBubble == "true" ? window.props.tcol : "var(--selection)"
         }
     }
@@ -46,7 +45,7 @@ function updateNode(node) {
 function updateList(list) {
     // Is Connected
     let isConnected = list.dataset.prophline || "true"
-    let line = window.funcs.getLine(list.line)
+    let line = window.funcs.getLine(list.dataset.line)
 
     if (line) {
         line.style.visibility = isConnected == "true" ? "visible" : "hidden"
@@ -130,8 +129,6 @@ window.addEventListener("selectedChanged", () => {
         const tcol = window.props.tcol
         const bcol = window.props.bcol
         const ocol = window.props.ocol
-
-        // console.log(!prop, !prop.parentElement.parentElement, prop.parentElement.parentElement?, prop.tagName != "INPUT")
         if (tcol == lastTcol && bcol == lastBcol && ocol == lastOcol) return
         lastTcol = tcol
         lastBcol = bcol

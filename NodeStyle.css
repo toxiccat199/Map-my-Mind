@@ -2,8 +2,8 @@
 .node>*,
 .list>*,
 .trunk>* {
-    font-weight:normal;
-    font-family:monospace, system-ui, "Segoe UI Symbol", sans-serif;
+    font-weight: normal;
+    font-family: monospace, system-ui, "Segoe UI Symbol", sans-serif;
 }
 
 .node {
@@ -76,6 +76,9 @@ textarea {
     padding: 0;
     display: block;
     overflow: hidden;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 textarea:focus {
@@ -87,6 +90,10 @@ textarea:focus {
 
 textarea[readonly] {
     cursor: default;
+}
+
+textarea::placeholder {
+    line-height: 1.4;
 }
 
 .tScale {
@@ -128,8 +135,8 @@ textarea[readonly] {
 
 /*list*/
 .list {
-    width: 13%;
-    aspect-ratio: 76/146;
+    width: 18%;
+    aspect-ratio: 53/73;
     position: absolute;
     z-index: 1000;
 }
@@ -207,7 +214,8 @@ textarea[readonly] {
     height: auto;
 }
 
-.selected > .bubble, .selected > .listContent {
+.selected>.bubble,
+.selected>.listContent {
     border-color: var(--selection) !important;
     border-style: solid !important;
 }

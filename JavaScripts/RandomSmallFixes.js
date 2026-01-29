@@ -25,7 +25,7 @@
         element.dataset.lastWidth = width
 
         element.style.height = "auto"
-        if (element.style.scrollHeight == undefined) {
+        if (element.scrollHeight == undefined) {
             requestAnimationFrame(()=>update1Height(element))
             return
         }
@@ -69,7 +69,6 @@
 
         if (element.dataset.lastText == text && element.dataset.lastWidth == width) return
         if (width == undefined || text == undefined) return
-        console.log("workin")
 
         element.dataset.lastText = text
         element.dataset.lastWidth = width
@@ -205,7 +204,6 @@
                         text.style.color = ""
                 }
                 if (selection && selection.dataset.prophbub == "false") selection.querySelector(".nodeText").style.color = "var(--selection)"
-                // console.log(selection.dataset.prophbub == "false", selection.querySelector(".nodeText").style.color)
             }
         lastSel = selection
         requestAnimationFrame(loop)

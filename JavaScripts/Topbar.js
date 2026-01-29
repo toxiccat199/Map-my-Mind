@@ -88,38 +88,45 @@ window.addEventListener("mousedown", hideAll)
         const selectedObj = document.activeElement
 
         if (selectedObj && selectedObj.tagName == "TEXTAREA" && !selectedObj.readonly && selectedObj.parentElement.parentElement.id == "mmViewport") {
-            selectedObj.value += "•"
+            const start = selectedObj.selectionStart
+            selectedObj.value = selectedObj.value.slice(0,start) + "•" + selectedObj.value.slice(start)
+            selectedObj.selectionStart,selectedObj.selectionEnd = start + 1
             return
         }
         const SelectedNode = window.funcs.getSelected()
 
         if (!SelectedNode || !lastFocusedType) return
-        switch (lastFocusedType) {
+        let obj
+        switch(lastFocusedType) {
             case "text": {
                 if (SelectedNode.classList.contains("node")) {
-                    SelectedNode.getElementsByClassName("nodeText")[0].value += "•"
+                    obj = SelectedNode.getElementsByClassName("nodeText")[0]
                 }
                 if (SelectedNode.classList.contains("list")) {
-                    SelectedNode.getElementsByClassName("listContent")[0].value += "•"
+                    obj = SelectedNode.getElementsByClassName("listContent")[0]
                 }
                 if (SelectedNode.classList.contains("trunk")) {
-                    SelectedNode.getElementsByClassName("mmTitle")[0].value += "•"
+                    obj = SelectedNode.getElementsByClassName("mmTitle")[0]
                 }
                 break
             }
             case "desc": {
-                SelectedNode.getElementsByClassName("description")[0].value += "•"
+                obj = SelectedNode.getElementsByClassName("description")[0]
                 break
             }
             case "info": {
-                SelectedNode.getElementsByClassName("info")[0].value += "•"
+                obj = SelectedNode.getElementsByClassName("info")[0]
                 break
             }
             case "titl": {
-                SelectedNode.getElementsByClassName("listTitle")[0].value += "•"
+                obj = SelectedNode.getElementsByClassName("listTitle")[0]
                 break
             }
         }
+
+            const start = obj.selectionStart
+            obj.value = obj.value.slice(0,start) + "•" + obj.value.slice(start)
+            obj.selectionStart,obj.selectionEnd = start + 1
     }
 
     document.getElementById("tbIBP").addEventListener("pointerdown", main)
