@@ -158,7 +158,7 @@ function updateArrowkeys(time) {
 
     delta = (time - lastTime) / 1000;
     lastTime = time;
-    const speed = shiftPressed ? 600 : 400;
+    const speed = shiftPressed ? 800 : 600;
 
     if (upPressed) directionY += 1;
     if (leftPressed) directionX += 1;
@@ -171,8 +171,8 @@ function updateArrowkeys(time) {
         directionY /= length;
     }
 
-    viewport.style.left = (directionX * speed) / 5.85 * delta + stringToNumber(viewport.style.left) + "%";
-    viewport.style.top = (directionY * speed) / 3.74 * delta + stringToNumber(viewport.style.top) + "%";
+    viewport.style.left = pixelsToPerX(directionX * speed * delta, document.body) + stringToNumber(viewport.style.left) + "%";
+    viewport.style.top = pixelsToPerY(directionY * speed * delta, document.body) + stringToNumber(viewport.style.top) + "%";
     requestAnimationFrame(updateArrowkeys);
 }
 

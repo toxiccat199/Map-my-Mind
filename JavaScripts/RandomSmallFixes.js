@@ -20,9 +20,11 @@
 
         if (element.dataset.lastText == text && element.dataset.lastWidth == width) return
         if (width == undefined || text == undefined) return
-
+        console.log(":D", element.classList[0])
         element.dataset.lastText = text
         element.dataset.lastWidth = width
+
+        element.style.fontSize = element.clientWidth / (Number(element.dataset.maxline) ?? 10) + "px"
 
         element.style.height = "auto"
         if (element.scrollHeight == undefined) {
@@ -36,7 +38,6 @@
         } else {
             element.style.height = height + "vh";
         }
-        element.style.fontSize = element.clientWidth / (Number(element.dataset.maxline) ?? 10) + "px"
     }
 
     function loopFun() {

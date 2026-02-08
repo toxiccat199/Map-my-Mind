@@ -5,14 +5,12 @@ const keybinds = []
 document.addEventListener("keydown", (event)=>{
     for (const i in keybinds) {
         tab = keybinds[i]
-        let keybind = tab.keybind.slice(0,1)
-        const isCtrl = tab.keybind.slice(1,2) == "1"
-        const isShift = tab.keybind.slice(2,3) == "1"
-        const isAlt =tab.keybind.slice(3,4) == "1"
-        const canInFocus = tab.keybind.slice(4,5) == "1"
-        if (document.activeElement?.tagName == "TEXTAREA" && !document.activeElement?.readOnly && !canInFocus) continue
-
-        if (keybind != "-") {keybind = "Key"+keybind} else {keybind = "Delete"}
+        const isCtrl = tab.props.slice(0,1) == "1"
+        const isShift = tab.props.slice(1,2) == "1"
+        const isAlt =tab.props.slice(2,3) == "1"
+        const canInFocus = tab.props.slice(3,4) == "1"
+        const keybind = (tab.props.slice(4,5) ? "1" && "" : "Key") + tab.key
+        if (document.activeElement?.tagName == "TEXTAREA" && !document.activeElement?.readOnly && !canInFocus) continu
 
         if (event.code == keybind && (event.ctrlKey == isCtrl) && (event.shiftKey == isShift) && (event.altKey == isAlt)) {
             tab.func()
@@ -58,8 +56,8 @@ funcs = {
         }
         // window.props.selected = 0
     },
-    createKeybind: function(func,mainkey,ctrl,shift,alt,description,canInFocus) {
-        keybinds.push({keybind: mainkey+(ctrl?1:0)+(shift?1:0)+(alt?1:0)+(canInFocus?1:0), func: func,description: description})
+    createKeybind: function(func,mainkey,ctrl,shift,alt,description,canInFocus,useMkAsCode) {
+        keybinds.push({props: ""+(ctrl?1:0)+(shift?1:0)+(alt?1:0)+(canInFocus?1:0)+(useMkAsCode?1:0), key:mainkey, func: func,description: description})
     },
     getSelected: function () {
         return window.funcs.getObj(window.props.selected)

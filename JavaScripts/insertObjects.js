@@ -241,7 +241,7 @@ setTimeout(() => {
     window.funcs.createKeybind(() => { createList(true) }, "X", true, false, true, "Create Sibling List")
     window.funcs.createKeybind(CreateDesc, "D", false, true, false, "Create Notes")
     window.funcs.createKeybind(CreateInfo, "E", false, true, false, "Create Info")
-    window.funcs.createKeybind(deleteObj, "-", false, false, false, "Delete")
+    window.funcs.createKeybind(deleteObj, "Delete", false, false, false, "Delete",null,true)
     window.funcs.createKeybind(() => {
         const selected = window.funcs.getSelected()
         if (!selected || (!selected.classList.contains("node") && !selected.classList.contains("list"))) return

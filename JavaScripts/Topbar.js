@@ -140,15 +140,21 @@ window.addEventListener("mousedown", hideAll)
     const zoomTypes = [10, 15, 25, 40, 60, 100, 150, 200, 300, 400, 500] // reminder: 100 = 70vw.
     let currentZoom = 5
 
+    function updateZoom() {
+        const mmViewport = document.getElementById("mmViewport")
+        mmViewport.style.width = zoomTypes[currentZoom] * 0.7 + "vw"
+        document.getElementById("background").style.backgroundSize = zoomTypes[currentZoom] * 0.05 + "vw"
+    }
+
     function zoomin() {
-        if (currentZoom == zoomTypes.length) return
+        if (currentZoom == zoomTypes.length-1) return
         currentZoom += 1
-        document.getElementById("mmViewport").style.width = zoomTypes[currentZoom] * 0.7 + "vw"
+        updateZoom()
     }
     function zoomout() {
         if (currentZoom == 0) return
         currentZoom -= 1
-        document.getElementById("mmViewport").style.width = zoomTypes[currentZoom] * 0.7 + "vw"
+        updateZoom()
     }
     function zoomfit() {
         let biggest = 0
@@ -169,15 +175,15 @@ window.addEventListener("mousedown", hideAll)
     }
     function zoomDefault() {
         currentZoom = 5
-        document.getElementById("mmViewport").style.width = "70vw"
+        updateZoom()
     }
 
     document.getElementById("tbZoom").addEventListener("pointerdown", zoomin)
     document.getElementById("tbZoomOut").addEventListener("pointerdown", zoomout)
-    document.getElementById("tbZoomFit").addEventListener("pointerdown", zoomfit)
+    // document.getElementById("tbZoomFit").addEventListener("pointerdown", zoomfit)
      document.getElementById("tbZoomDefault").addEventListener("pointerdown", zoomDefault)
-    window.funcs.createKeybind(zoomin, "Z", false, false, true, "Zoom In")
-    window.funcs.createKeybind(zoomout, "Z", false, true, true, "Zoom Out")
+    window.funcs.createKeybind(zoomin, "Equal", false, true, false, "Zoom In",null,true)
+    window.funcs.createKeybind(zoomout, "Minus", false, true, false, "Zoom Out",null,true)
 }
 // CHANGE THEME
 {
